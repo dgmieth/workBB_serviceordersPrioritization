@@ -1,0 +1,11 @@
+CREATE TABLE `t202_operacoesBBTSPriorizadas` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `nr_unico` bigint(11) unsigned DEFAULT NULL,
+  `idProtOriginario` bigint(11) DEFAULT NULL,
+  `insertedIn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `insertedBy` varchar(9) DEFAULT NULL,
+  `excluded` int(1) DEFAULT '0',
+  `excludedIn` timestamp NULL DEFAULT NULL,
+  `excludedBy` varchar(9) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='corresponde ao id do protocolo originário que foi priorizado'

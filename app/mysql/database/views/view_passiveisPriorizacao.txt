@@ -1,0 +1,86 @@
+CREATE OR REPLACE
+ALGORITHM = UNDEFINED VIEW `priorizacaoProtocolos`.`view_passiveisPriorizacao` AS
+select
+    `td`.`ID` AS `ID`,
+    `td`.`PROTOCOLO` AS `PROTOCOLO`,
+    `td`.`MCI_PRINCIPAL` AS `MCI_PRINCIPAL`,
+    `td`.`PRIORIZADO` AS `PRIORIZADO_DEMANDAS`,
+    `td`.`ETAPA` AS `ETAPA_ID`,
+    `te`.`NOME` AS `ETAPA_NOME`,
+    `tds`.`ID` AS `DET_SERV_ID`,
+    `tds`.`NOME` AS `DET_SERV_NOME`,
+    `td`.`DT_INICIO` AS `DT_INICIO`,
+    `td`.`DT_CONCLUSAO` AS `DT_CONCLUSAO`,
+    `td`.`DT_PRAZO_SLA` AS `DT_PRAZO_SLA`,
+    `td`.`DT_PRAZO_CLIENTE` AS `DT_PRAZO_CLIENTE`,
+    `td`.`identificador_t530_origem_solicitacao` AS `NPJ`
+from
+    ((`demandas_gs`.`t100_demanda` `td`
+left join `demandas_gs`.`t520_etapa` `te` on
+    ((`te`.`ID` = `td`.`ETAPA`)))
+left join `demandas_gs`.`t502_detalhe_servico` `tds` on
+    ((`tds`.`ID` = `td`.`t502_detalhe_servico_ID`)))
+where
+    ((not(`td`.`ID` in (
+    select
+        `tdb`.`idProt`
+    from
+        `priorizacaoProtocolos`.`t100_demandaBBTSPriorizadas` `tdb`
+    where
+        (`tdb`.`excluded` = 0))))
+    and (`td`.`PROTOCOLO` is not null)
+    and `td`.`t502_detalhe_servico_ID` in (
+    select
+        `tdspb`.`idDetServ`
+    from
+        `priorizacaoProtocolos`.`t201_detServPriorizadosBBTS` `tdspb`
+    where
+        (`tdspb`.`excluded` = 0))
+    and (`td`.`ETAPA` not in (9,
+    10,
+    97,
+    98,
+    99)))
+union
+select
+    `td`.`ID` AS `ID`,
+    `td`.`PROTOCOLO` AS `PROTOCOLO`,
+    `td`.`MCI_PRINCIPAL` AS `MCI_PRINCIPAL`,
+    `td`.`PRIORIZADO` AS `PRIORIZADO_DEMANDAS`,
+    `td`.`ETAPA` AS `ETAPA_ID`,
+    `te`.`NOME` AS `ETAPA_NOME`,
+    `tds`.`ID` AS `DET_SERV_ID`,
+    `tds`.`NOME` AS `DET_SERV_NOME`,
+    `td`.`DT_INICIO` AS `DT_INICIO`,
+    `td`.`DT_CONCLUSAO` AS `DT_CONCLUSAO`,
+    `td`.`DT_PRAZO_SLA` AS `DT_PRAZO_SLA`,
+    `td`.`DT_PRAZO_CLIENTE` AS `DT_PRAZO_CLIENTE`,
+    `td`.`identificador_t530_origem_solicitacao` AS `NPJ`
+from
+    ((`demandas_gs`.`t100_demanda` `td`
+left join `demandas_gs`.`t520_etapa` `te` on
+    ((`te`.`ID` = `td`.`ETAPA`)))
+left join `demandas_gs`.`t502_detalhe_servico` `tds` on
+    ((`tds`.`ID` = `td`.`t502_detalhe_servico_ID`)))
+where
+    (/*(not(`td`.`ID` in (
+    select
+        `tdb`.`idProt`
+    from
+        `priorizacaoProtocolos`.`t100_demandaBBTSPriorizadas` `tdb`
+    where
+        (`tdb`.`excluded` = 0))))
+    and*/ (`td`.`PROTOCOLO` is not null)
+    and `td`.`t502_detalhe_servico_ID` in (
+    select
+        `tdspb`.`idDetServ`
+    from
+        `priorizacaoProtocolos`.`t201_detServPriorizadosBBTS` `tdspb`
+    where
+        (`tdspb`.`excluded` = 0))
+    and (`td`.`ETAPA` in (9,
+    10,
+    97,
+    98,
+    99))
+    and (`td`.`DT_INICIO` >= (now() + interval -(45) day)))

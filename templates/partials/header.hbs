@@ -1,0 +1,66 @@
+<div id="header-wrapper" class=".container-fluid">
+    <div id="nav-wrapper" class=".container-fluid">
+        <nav class="navbar fixed-top navbar-expand-lg" >
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a id="dashboard" class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Relatórios
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                        <a id="m1-i1" class="dropdown-item" href="/todosAtivos">Todos (ativos)</a>
+                        <a id="m1-i2" class="dropdown-item" href="/todos">Todos</a>
+                        <a id="m1-i3" class="dropdown-item" href="/priorizadosDemandas">Priorizados Demandas</a>
+                        <a id="m1-i4" class="dropdown-item" href="/priorizadosBBTS">Priorizados BBTS</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Priorizar/Despriorizar BBTS
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                        <a id="m2-i1" class="dropdown-item" href="/passiveisPriorizacao">Priorizar BBTS</a>
+                        <a id="m2-i2" class="dropdown-item" href="/passiveisDespriorizacao">Despriorizar BBTS</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Configurações ferramenta
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+                        <a id="m3-i1" class="dropdown-item" href="/alocarDetServ">Alocar detalhe de serviço para BBTS</a>
+                        <a id="m3-i2" class="dropdown-item" href="/desalocarDetServ">Excluir detalhe de serviço da BBTS</a>
+                        <a id="m3-i3" class="dropdown-item" href="/logFerramenta">Log acesso e configurações</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+        <div id="content-wrapper" class="d-flex .flew-row align-items-end">
+            <a id="homeBtn" href="/todosAtivos">
+            <div id="container-left" class="p-2" style="background-image: url(/img/logoBB.png);"></div>
+            </a>
+            <div id="container-right" class="p-2"></div>
+                <div id="text-wrapper" class="flex-column" style="margin-top: 10px;">
+                    <div id="bb-wrapper" class="p-2 textBB">
+                        <h1 >{{appInfo.headerBanco}}</h1>
+                    </div>
+                    <div id="gecor-wrapper" class="p-2 textBB">
+                        <h6>{{appInfo.headerPrefixo}}</h6>
+                    </div>
+                </div>
+        </div>
+        {{#if tarja}}
+            <div id="page-title-wrapper" class=".container-fuid">
+                <h2 class="h2 align-middle">{{title}}</h2>
+            </div>
+        {{/if}}
+</div>
+<script src="/js/header.js"></script>

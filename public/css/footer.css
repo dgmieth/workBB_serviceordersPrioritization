@@ -1,0 +1,20 @@
+/*======================================================================================
+                            estilos do #mainBkgBlockFooter
+  ======================================================================================*/
+#mainBkgBlockFooter{
+    background-color: rgba(14, 32, 116, 1);
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+}
+/*======================================================================================
+                            estilos do #mainBkgBlockFooter
+  ======================================================================================*/
+#bbInfoFooter{
+    letter-spacing: 1px;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgba(255, 232, 86, 1);
+    font-size: 4.5mm;
+}

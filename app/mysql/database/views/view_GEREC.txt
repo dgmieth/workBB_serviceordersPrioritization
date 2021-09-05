@@ -1,0 +1,4 @@
+SELECT 
+	gql .*
+FROM gecor.Gerec_Qtd_Lim gql 
+WHERE gql .Area = 'Judicial'

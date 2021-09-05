@@ -1,0 +1,53 @@
+CREATE OR REPLACE
+ALGORITHM = UNDEFINED VIEW `priorizacaoProtocolos`.`view_priorizadosBBTS` AS
+select
+    distinct `td`.`PROTOCOLO` AS `PROTOCOLO`,
+    `td`.`MATR_RESP` AS `MATR_RESP`,
+    `td`.`RESP_ANALISE` AS `RESP_ANALISE`,
+    `ts`.`NOME` AS `SERVICO`,
+    `tds`.`NOME` AS `DETALHE_SERVICO`,
+    `tas`.`NOME` AS `AREA`,
+    `te`.`NOME` AS `ETAPA`,
+    'PRIORIZADO' AS `MARCADOR`,
+    `td`.`PREF_DEMANDANTE` AS `PREF_DEMANDANTE`,
+    `gql`.`Gerec` AS `GEREC`,
+    `gql`.`Nome_Gerec` AS `NOME_GEREC`,
+    `td`.`VALOR_NEGOCIO` AS `VALOR_NEGOCIO`,
+    `td`.`DT_INICIO` AS `DT_INICIO`,
+    `tdb`.`priorizadaEm` AS `DT_INCLUSAO_PRIORIZACAO`,
+    `td`.`DT_PRAZO_SLA` AS `DT_PRAZO_SLA`,
+    `td`.`DT_CONCLUSAO` AS `DT_CONCLUSAO`,
+    `gql`.`Lim_Semanal` AS `Lim_Semanal`,
+    `gql`.`Lim_Mensal` AS `Lim_Mensal`,
+    (case
+        when (`gql`.`Lim_Semanal` > 1) then `gql`.`Lim_Semanal`
+        else `gql`.`Lim_Mensal`
+    end) AS `LIM_UT`,
+    'BBTS' AS `SIS_PRIORIZACAO`
+from
+    (((((((((`demandas_gs`.`t100_demanda` `td`
+join `demandas_gs`.`t105_operacao` `to2` on
+    ((`to2`.`t100_demanda_ID` = `td`.`ID`)))
+join `priorizacaoProtocolos`.`t202_operacoesBBTSPriorizadas` `tob` on
+    ((`tob`.`nr_unico` = `to2`.`NR_UNICO`)))
+left join `priorizacaoProtocolos`.`t100_demandaBBTSPriorizadas` `tdb` on
+    ((`tdb`.`idProt` = `tob`.`idProtOriginario`)))
+left join `demandas_gs`.`t520_etapa` `te` on
+    ((`te`.`ID` = `td`.`ETAPA`)))
+left join `demandas_gs`.`t502_detalhe_servico` `tds` on
+    ((`tds`.`ID` = `td`.`t502_detalhe_servico_ID`)))
+left join `demandas_gs`.`t501_servico` `ts` on
+    ((`ts`.`ID` = `tds`.`t501_servico_ID`)))
+left join `demandas_gs`.`t504_area_servico` `tas` on
+    ((`tas`.`ID` = `tds`.`t504_area_servico`)))
+left join priorizacaoProtocolos.view_GEREC `gql` on
+    ((`gql`.`Prefixo` = `td`.`PREF_DEMANDANTE`)))
+join `priorizacaoProtocolos`.`t201_detServPriorizadosBBTS` `t2` on
+    ((`t2`.`idDetServ` = `tds`.`ID`)))
+where
+    ((`tob`.`excluded` = 0)
+    and (`td`.`ETAPA` not in (9,
+    10,
+    97,
+    98,
+    99)))

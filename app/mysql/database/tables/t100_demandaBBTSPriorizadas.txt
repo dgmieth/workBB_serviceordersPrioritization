@@ -1,0 +1,10 @@
+CREATE TABLE `t100_demandaBBTSPriorizadas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idProt` bigint(11) DEFAULT NULL,
+  `priorizadaEm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `priorizadaPor` varchar(15) DEFAULT NULL,
+  `excluded` int(1) DEFAULT '0',
+  `excludedIn` timestamp NULL DEFAULT NULL,
+  `excludedBy` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8

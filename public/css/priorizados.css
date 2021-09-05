@@ -1,0 +1,10 @@
+.table td, .table th, .table thead th {
+    border-top: none; 
+    border-bottom: none;
+}
+.table-hover tbody tr:hover {
+    background-color: rgba(0,0,0,.075)!important;
+}
+#protocolos-wrapper{
+    scroll-margin-top: 85px;
+}

@@ -1,0 +1,12 @@
+CREATE OR REPLACE
+ALGORITHM = UNDEFINED VIEW `priorizacaoProtocolos`.`view_get500Log` AS
+select
+    `thl`.`id` AS `id`,
+    `thl`.`databaseUser` AS `databaseUser`,
+    `thl`.`description` AS `description`,
+    `thl`.`currentTimeStamp` AS `currentTimeStamp`
+from
+    `priorizacaoProtocolos`.`t900_historicoLog` `thl`
+order by
+    `thl`.`id` desc
+limit 500

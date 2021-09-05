@@ -1,0 +1,9 @@
+CREATE OR REPLACE
+ALGORITHM = UNDEFINED VIEW `priorizacaoProtocolos`.`view_passiveisPriorizacao_Extenso` AS
+select
+    `t2`.`NR_UNICO` AS `NR_UNICO`,
+    `t2`.`t100_demanda_ID` AS `t100_demanda_ID`
+from
+    (`demandas_gs`.`t105_operacao` `t2`
+join `priorizacaoProtocolos`.`view_passiveisPriorizacao` `vpp` on
+    ((`t2`.`t100_demanda_ID` = `vpp`.`ID`)))

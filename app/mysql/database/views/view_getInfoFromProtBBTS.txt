@@ -1,0 +1,35 @@
+CREATE OR REPLACE
+ALGORITHM = UNDEFINED VIEW `priorizacaoProtocolos`.`view_getInfoFromProtBBTS` AS
+select
+    `td`.`PROTOCOLO` AS `PROTOCOLO`,
+    `td`.`MATR_RESP` AS `MATR_RESP`,
+    `td`.`RESP_ANALISE` AS `RESP_ANALISE`,
+    `ts`.`NOME` AS `servico`,
+    `tds`.`NOME` AS `detalhe_servico`,
+    `tas`.`NOME` AS `area`,
+    `te`.`NOME` AS `etapa`,
+    'PRIORIZADO' AS `marcador`,
+    `td`.`PREF_DEMANDANTE` AS `PREF_DEMANDANTE`,
+    `g`.`Gerec` AS `Gerec`,
+    `g`.`Nome_Gerec` AS `Nome_Gerec`,
+    `td`.`VALOR_NEGOCIO` AS `VALOR_NEGOCIO`,
+    `td`.`DT_INICIO` AS `DT_INICIO`,
+    `tdb`.`priorizadaEm` AS `dt_inclusao_priorizacao`,
+    `td`.`DT_PRAZO_SLA` AS `DT_PRAZO_SLA`,
+    `td`.`DT_CONCLUSAO` AS `DT_CONCLUSAO`
+from
+    ((((((`demandas_gs`.`t100_demanda` `td`
+join `priorizacaoProtocolos`.`t100_demandaBBTSPriorizadas` `tdb` on
+    ((`td`.`ID` = `tdb`.`idProt`)))
+left join `demandas_gs`.`t520_etapa` `te` on
+    ((`te`.`ID` = `td`.`ETAPA`)))
+left join `demandas_gs`.`t502_detalhe_servico` `tds` on
+    ((`tds`.`ID` = `td`.`t502_detalhe_servico_ID`)))
+left join `demandas_gs`.`t501_servico` `ts` on
+    ((`ts`.`ID` = `tds`.`t501_servico_ID`)))
+left join `demandas_gs`.`t504_area_servico` `tas` on
+    ((`tas`.`ID` = `tds`.`t504_area_servico`)))
+left join `Bse_demandas`.`Gerec` `g` on
+    ((`g`.`Prefixo` = `td`.`PREF_DEMANDANTE`)))
+where
+    (`tdb`.`excluded` = 0)

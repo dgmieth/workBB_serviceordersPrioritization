@@ -1,0 +1,73 @@
+CREATE OR REPLACE
+ALGORITHM = UNDEFINED VIEW `priorizacaoProtocolos`.`view_priorizadosTodosAtivos` AS
+select
+    `vrj`.`PROTOCOLO` AS `PROTOCOLO`,
+    `vrj`.`MATR_RESP` AS `MATR_RESP`,
+    `vrj`.`RESP_ANALISE` AS `RESP_ANALISE`,
+    `vrj`.`SERVICO` AS `SERVICO`,
+    `vrj`.`DETALHE_SERVICO` AS `DETALHE_SERVICO`,
+    `vrj`.`AREA` AS `AREA`,
+    `vrj`.`ETAPA` AS `ETAPA`,
+    `vrj`.`MARCADOR` AS `MARCADOR`,
+    `vrj`.`PREF_DEMANDANTE` AS `PREF_DEMANDANTE`,
+    `vrj`.`GEREC` AS `GEREC`,
+    `vrj`.`NOME_GEREC` AS `NOME_GEREC`,
+    `vrj`.`VALOR_NEGOCIO` AS `VALOR_NEGOCIO`,
+    `vrj`.`DT_INICIO` AS `DT_INICIO`,
+    `vrj`.`DT_INCLUSAO_PRIORIZACAO` AS `DT_INCLUSAO_PRIORIZACAO`,
+    `vrj`.`DT_PRAZO_SLA` AS `DT_PRAZO_SLA`,
+    `vrj`.`DT_CONCLUSAO` AS `DT_CONCLUSAO`,
+    `vrj`.`Lim_Semanal` AS `Lim_Semanal`,
+    `vrj`.`Lim_Mensal` AS `Lim_Mensal`,
+    `vrj`.`LIM_UT` AS `LIM_UT`,
+    `vrj`.`SIS_PRIORIZACAO` AS `SIS_PRIORIZACAO`
+from
+    `priorizacaoProtocolos`.`view_priorizadosDemandas` `vrj`
+where
+    (not(`vrj`.`ETAPA` in (
+    select
+        `te`.`NOME`
+    from
+        `demandas_gs`.`t520_etapa` `te`
+    where
+        (`te`.`ID` in (9,
+        10,
+        97,
+        98,
+        99)))))
+union
+select
+    `vbp`.`PROTOCOLO` AS `PROTOCOLO`,
+    `vbp`.`MATR_RESP` AS `MATR_RESP`,
+    `vbp`.`RESP_ANALISE` AS `RESP_ANALISE`,
+    `vbp`.`SERVICO` AS `SERVICO`,
+    `vbp`.`DETALHE_SERVICO` AS `DETALHE_SERVICO`,
+    `vbp`.`AREA` AS `AREA`,
+    `vbp`.`ETAPA` AS `ETAPA`,
+    `vbp`.`MARCADOR` AS `MARCADOR`,
+    `vbp`.`PREF_DEMANDANTE` AS `PREF_DEMANDANTE`,
+    `vbp`.`GEREC` AS `GEREC`,
+    `vbp`.`NOME_GEREC` AS `NOME_GEREC`,
+    `vbp`.`VALOR_NEGOCIO` AS `VALOR_NEGOCIO`,
+    `vbp`.`DT_INICIO` AS `DT_INICIO`,
+    `vbp`.`DT_INCLUSAO_PRIORIZACAO` AS `DT_INCLUSAO_PRIORIZACAO`,
+    `vbp`.`DT_PRAZO_SLA` AS `DT_PRAZO_SLA`,
+    `vbp`.`DT_CONCLUSAO` AS `DT_CONCLUSAO`,
+    `vbp`.`Lim_Semanal` AS `Lim_Semanal`,
+    `vbp`.`Lim_Mensal` AS `Lim_Mensal`,
+    `vbp`.`LIM_UT` AS `LIM_UT`,
+    `vbp`.`SIS_PRIORIZACAO` AS `SIS_PRIORIZACAO`
+from
+    `priorizacaoProtocolos`.`view_priorizadosBBTS` `vbp`
+where
+    (not(`vbp`.`ETAPA` in (
+    select
+        `te`.`NOME`
+    from
+        `demandas_gs`.`t520_etapa` `te`
+    where
+        (`te`.`ID` in (9,
+        10,
+        97,
+        98,
+        99)))))

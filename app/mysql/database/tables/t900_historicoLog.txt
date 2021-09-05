@@ -1,0 +1,7 @@
+CREATE TABLE `t900_historicoLog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `databaseUser` varchar(100) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `currentTimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8

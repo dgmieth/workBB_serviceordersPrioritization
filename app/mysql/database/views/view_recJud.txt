@@ -1,0 +1,28 @@
+CREATE OR REPLACE
+ALGORITHM = UNDEFINED VIEW `priorizacaoProtocolos`.`view_recJud` AS
+select
+    `rj`.`PROTOCOLO` AS `PROTOCOLO`,
+    `rj`.`MATR_RESP` AS `MATR_RESP`,
+    `rj`.`RESP_ANALISE` AS `RESP_ANALISE`,
+    `rj`.`SERVICO` AS `SERVICO`,
+    `rj`.`DETALHE_SERVICO` AS `DETALHE_SERVICO`,
+    `rj`.`AREA` AS `AREA`,
+    `rj`.`ETAPA` AS `ETAPA`,
+    `rj`.`MARCADOR` AS `MARCADOR`,
+    `rj`.`PREF_DEMANDANTE` AS `PREF_DEMANDANTE`,
+    `rj`.`GEREC` AS `GEREC`,
+    `rj`.`NOME_GEREC` AS `NOME_GEREC`,
+    `rj`.`VALOR_NEGOCIO` AS `VALOR_NEGOCIO`,
+    `rj`.`DT_INICIO` AS `DT_INICIO`,
+    `rj`.`DT_INCLUSAO_PRIORIZACAO` AS `DT_INCLUSAO_PRIORIZACAO`,
+    `rj`.`DT_PRAZO_SLA` AS `DT_PRAZO_SLA`,
+    `rj`.`DT_CONCLUSAO` AS `DT_CONCLUSAO`,
+    `rj`.`Lim_Semanal` AS `Lim_Semanal`,
+    `rj`.`Lim_Mensal` AS `Lim_Mensal`,
+    `rj`.`LIM_UT` AS `LIM_UT`,
+    'Demandas' AS `SIS_PRIORIZACAO`
+from
+    `demandas_gs`.`RecJud` `rj`
+where
+    ((`rj`.`DT_CONCLUSAO` >= '2019-01-01 00:00:00')
+    or isnull(`rj`.`DT_CONCLUSAO`))

@@ -1,0 +1,19 @@
+CREATE OR REPLACE
+ALGORITHM = UNDEFINED VIEW `priorizacaoProtocolos`.`view_detalhesServicosPassiveisAlocacao` AS
+select
+    `tds`.`ID` AS `idDetServ`,
+    `tds`.`NOME` AS `NOME`,
+    `tds`.`NOME_REDUZIDO` AS `NOME_REDUZIDO`,
+    `tas`.`NOME` AS `AREA`
+from
+    (`demandas_gs`.`t502_detalhe_servico` `tds`
+left join `demandas_gs`.`t504_area_servico` `tas` on
+    ((`tas`.`ID` = `tds`.`t504_area_servico`)))
+where
+    (not(`tds`.`ID` in (
+    select
+        `tdspb`.`idDetServ`
+    from
+        `priorizacaoProtocolos`.`t201_detServPriorizadosBBTS` `tdspb`
+    where
+        (`tdspb`.`excluded` = 0))))

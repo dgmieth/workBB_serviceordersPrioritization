@@ -1,0 +1,10 @@
+CREATE TABLE `t201_detServPriorizadosBBTS` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idDetServ` int(11) NOT NULL,
+  `insertedIn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `insertedBy` varchar(15) DEFAULT NULL,
+  `excluded` int(1) DEFAULT '0',
+  `excludedIn` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `excludedBy` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8
